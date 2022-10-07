@@ -17,7 +17,7 @@ import zlib
 import boto3
 
 from sentry.nodestore.base import NodeStorage
-
+from botocore.client import Config
 
 def retry(attempts, func, *args, **kwargs):
     for _ in range(attempts):
