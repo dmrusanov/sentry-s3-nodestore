@@ -3,6 +3,7 @@ sentry_s3_nodestore.backend
 ~~~~~~~~~~~~~~~~~~~~~
 
 :copyright: (c) 2015 by Ernest W. Durbin III.
+:copyright: (c) 2022 by Pavel Sorejs.
 :license: BSD, see LICENSE for more details.
 """
 
@@ -28,6 +29,9 @@ def retry(attempts, func, *args, **kwargs):
             raise
     raise
 
+def split_key(store_key):
+    return '{}/{}/{}/{}'.format(store_key[0:2],store_key[2:4],store_key[4:6],store_key)
+
 class S3NodeStorage(NodeStorage):
 
     def __init__(self, bucket_name=None, endpoint=None, region='eu-west-1', aws_access_key_id=None, aws_secret_access_key=None, max_retries=3):
@@ -42,7 +46,7 @@ class S3NodeStorage(NodeStorage):
         """
         >>> nodestore.delete('key1')
         """
-        self.client.delete_object(Bucket=self.bucket_name, Key=id)
+        self.client.delete_object(Bucket=self.bucket_name, Key=split_key(id))
 
     def delete_multi(self, id_list):
         """
@@ -54,7 +58,7 @@ class S3NodeStorage(NodeStorage):
         >>> delete_multi(['key1', 'key2'])
         """
         self.client.delete_objects(Bucket=self.bucket_name, Delete={
-            'Objects': [{'Key': id} for id in id_list]
+            'Objects': [{'Key': split_key(id)} for id in id_list]
         })
 
     def _get_bytes(self, id):
@@ -62,14 +66,14 @@ class S3NodeStorage(NodeStorage):
         >>> nodestore._get_bytes('key1')
         b'{"message": "hello world"}'
         """
-        result = retry(self.max_retries, self.client.get_object, Bucket=self.bucket_name, Key=id)
+        result = retry(self.max_retries, self.client.get_object, Bucket=self.bucket_name, Key=split_key(id))
         return zlib.decompress(result['Body'].read())
 
     def _set_bytes(self, id, data, ttl=None):
         """
         >>> nodestore.set('key1', b"{'foo': 'bar'}")
         """
-        retry(self.max_retries, self.client.put_object, Body=zlib.compress(data), Bucket=self.bucket_name, Key=id)
+        retry(self.max_retries, self.client.put_object, Body=zlib.compress(data), Bucket=self.bucket_name, Key=split_key(id))
 
     def generate_id(self):
         return urlsafe_b64encode(uuid4().bytes)

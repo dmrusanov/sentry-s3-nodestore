@@ -1,0 +1,27 @@
+name: Build release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.6
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.6'
+      - name: Build
+        run: |
+          python setup.py sdist
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          files: |
+            dist/*.tar.gz

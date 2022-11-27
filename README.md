@@ -9,7 +9,7 @@ This fork uses boto3 and has a few issues fixed to store data directly as raw bi
 # Installation
 
 ```bash
-$ pip install https://github.com/kanadaj/sentry-s3-nodestore/releases/download/1.0.2/sentry-s3-nodestore-1.0.2.tar.gz
+$ pip install https://github.com/pavels/sentry-s3-nodestore/releases/download/v1.0.3/sentry-s3-nodestore-1.0.3.tar.gz
 ```
 
 # Configuration
