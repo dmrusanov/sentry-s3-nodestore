@@ -38,7 +38,7 @@ class S3NodeStorage(NodeStorage):
         self.max_retries = max_retries
         self.bucket_name = bucket_name
         config = Config(
-            connect_timeout=20, read_timeout=20
+            connect_timeout=30, read_timeout=30
         )
         self.client = boto3.client('s3', config=config, endpoint_url=endpoint, aws_access_key_id = aws_access_key_id, aws_secret_access_key = aws_secret_access_key)
 
