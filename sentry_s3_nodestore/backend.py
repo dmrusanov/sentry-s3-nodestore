@@ -29,11 +29,11 @@ def retry(attempts, func, *args, **kwargs):
 
 class S3NodeStorage(NodeStorage):
 
-    def __init__(self, bucket_name=None, endpoint=None, region='eu-west-1', aws_access_key_id=None, aws_secret_access_key=None, max_retries=3):
+    def __init__(self, bucket_name=None, endpoint=None, region='eu-west-1', aws_access_key_id=None, aws_secret_access_key=None, max_retries=5):
         self.max_retries = max_retries
         self.bucket_name = bucket_name
         config = Config(
-            connect_timeout=20, read_timeout=20
+            connect_timeout=5, read_timeout=5
         )
         self.client = boto3.client('s3', config=config, endpoint_url=endpoint, aws_access_key_id = aws_access_key_id, aws_secret_access_key = aws_secret_access_key)
 
