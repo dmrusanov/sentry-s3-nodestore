@@ -2,7 +2,7 @@
 """
 sentry-s3-nodestore
 ==============
-An extension for Sentry which implements an S3 NodeStorage backend
+An extension for Sentry which implements an S3/Minio NodeStorage backend
 """
 from setuptools import setup
 
@@ -18,11 +18,11 @@ tests_requires = [
 
 setup(
     name='sentry-s3-nodestore',
-    version='1.0.3',
+    version='1.0.4',
     author='Ernest W. Durbin III',
     author_email='ewdurbin@gmail.com',
     url='http://github.com/ewdurbin/sentry-s3-nodestore',
-    description='A Sentry extension to add S3 as a NodeStore backend.',
+    description='A Sentry extension to add S3/Minio as a NodeStore backend.',
     long_description=__doc__,
     packages=['sentry_s3_nodestore'],
     license='BSD',
