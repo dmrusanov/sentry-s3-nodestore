@@ -2,12 +2,12 @@
 """
 sentry-s3-nodestore
 ==============
-An extension for Sentry which implements an S3/Minio NodeStorage backend
+An extension for Sentry which implements an Minio NodeStorage backend
 """
 from setuptools import setup
 
 install_requires = [
-    'boto3',
+    'minio',
     'simplejson',
     'sentry>=7.4.0',
 ]
@@ -18,11 +18,11 @@ tests_requires = [
 
 setup(
     name='sentry-s3-nodestore',
-    version='1.0.4',
-    author='Ernest W. Durbin III',
-    author_email='ewdurbin@gmail.com',
-    url='http://github.com/ewdurbin/sentry-s3-nodestore',
-    description='A Sentry extension to add S3/Minio as a NodeStore backend.',
+    version='1.0.6',
+    author='Negashev Alexandr',
+    author_email='i@negash.ru',
+    url='http://github.com/negashev/sentry-s3-nodestore',
+    description='A Sentry extension to add Minio as a NodeStore backend.',
     long_description=__doc__,
     packages=['sentry_s3_nodestore'],
     license='BSD',
@@ -31,7 +31,6 @@ setup(
     tests_requires=tests_requires,
     test_suite='tests',
     include_package_data=True,
-    download_url='https://pypi.python.org/pypi/sentry-s3-nodestore',
     classifiers=[
         'Framework :: Django',
         'Intended Audience :: Developers',
