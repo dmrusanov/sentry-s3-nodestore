@@ -18,7 +18,7 @@ tests_requires = [
 
 setup(
     name='sentry-s3-nodestore',
-    version='1.0.6',
+    version='1.0.9',
     author='Negashev Alexandr',
     author_email='i@negash.ru',
     url='http://github.com/negashev/sentry-s3-nodestore',

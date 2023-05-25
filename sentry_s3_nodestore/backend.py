@@ -13,7 +13,6 @@ import simplejson
 from base64 import urlsafe_b64encode
 from time import sleep
 from uuid import uuid4
-import zlib
 
 from minio import Minio
 
@@ -64,13 +63,13 @@ class S3NodeStorage(NodeStorage):
         b'{"message": "hello world"}'
         """
         result = retry(self.max_retries, self.client.get_object, bucket_name=self.bucket_name, object_name=id)
-        return zlib.decompress(result)
+        return result.read()
 
     def _set_bytes(self, id, data, ttl=None):
         """
         >>> nodestore.set('key1', b"{'foo': 'bar'}")
         """
-        retry(self.max_retries, self.client.put_object, bucket_name=self.bucket_name, object_name=id, data=zlib.compress(data), length=-1)
+        retry(self.max_retries, self.client.put_object, bucket_name=self.bucket_name, object_name=id, data=io.BytesIO(data), length=len(data)))
 
     def generate_id(self):
         return urlsafe_b64encode(uuid4().bytes)
