@@ -69,7 +69,7 @@ class S3NodeStorage(NodeStorage):
         """
         >>> nodestore.set('key1', b"{'foo': 'bar'}")
         """
-        retry(self.max_retries, self.client.put_object, bucket_name=self.bucket_name, object_name=id, data=io.BytesIO(data), length=len(data)))
+        retry(self.max_retries, self.client.put_object, bucket_name=self.bucket_name, object_name=id, data=io.BytesIO(data), length=len(data))
 
     def generate_id(self):
         return urlsafe_b64encode(uuid4().bytes)
