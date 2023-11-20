@@ -52,7 +52,7 @@ class S3NodeStorage(NodeStorage):
         delete.
         >>> delete_multi(['key1', 'key2'])
         """
-        error = self.client.remove_objects(self.bucket_name, [{'Key': id[0] + '/' + id[1] + '/' + id} for id in id_list])
+        error = self.client.remove_objects(self.bucket_name, [{'Key': id[0] + id[1] + '/' + id[2] + id[3] + '/' + id} for id in id_list])
         if error:
             for err in error:
                 raise Exception(err)
@@ -62,7 +62,7 @@ class S3NodeStorage(NodeStorage):
         >>> nodestore._get_bytes('key1')
         b'{"message": "hello world"}'
         """
-        object_name = id[0] + '/' + id[1] + '/' + id
+        object_name = id[0] + id[1] + '/' + id[2] + id[3] + '/' + id
         result = retry(self.max_retries, self.client.get_object, bucket_name=self.bucket_name, object_name=object_name)
         return result.read()
 
@@ -70,7 +70,7 @@ class S3NodeStorage(NodeStorage):
         """
         >>> nodestore.set('key1', b"{'foo': 'bar'}")
         """
-        object_name = id[0] + '/' + id[1] + '/' + id
+        object_name = id[0] + id[1] + '/' + id[2] + id[3] + '/' + id
         retry(self.max_retries, self.client.put_object, bucket_name=self.bucket_name, object_name=object_name, data=io.BytesIO(data), length=len(data))
 
     def generate_id(self):
