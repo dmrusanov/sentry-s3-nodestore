@@ -8,7 +8,7 @@ from setuptools import setup
 
 install_requires = [
     'minio',
-    'urllib3',
+    'urllib3==2.1.0',
     'simplejson',
     'sentry>=7.4.0',
 ]
